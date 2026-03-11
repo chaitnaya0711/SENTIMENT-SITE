@@ -36,8 +36,13 @@ class FinBertAnalyzer:
     def _load(self) -> None:
         if self.loaded:
             return
-        import torch
-        from transformers import AutoModelForSequenceClassification, AutoTokenizer
+        
+        try:
+            import torch
+            from transformers import AutoModelForSequenceClassification, AutoTokenizer
+        except ImportError:
+            self._torch = None
+            return
 
         self._tokenizer = AutoTokenizer.from_pretrained(self.model_name)
         self._model = AutoModelForSequenceClassification.from_pretrained(self.model_name)
@@ -67,8 +72,14 @@ class FinBertAnalyzer:
 
     def analyze_texts(self, texts: list[str]) -> list[dict[str, object]]:
         self._load()
-        assert self._tokenizer is not None
-        assert self._model is not None
+        if not self.loaded:
+            fallback = {
+                "label": "neutral",
+                "score": 1.0,
+                "probabilities": {"positive": 0.0, "neutral": 1.0, "negative": 0.0},
+            }
+            return [fallback] * len(texts)
+
         torch = self._torch
         results: list[dict[str, object] | None] = [None] * len(texts)
         uncached_positions: dict[str, list[int]] = {}

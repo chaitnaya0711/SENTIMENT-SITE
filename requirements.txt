@@ -1,9 +1,5 @@
-# Runtime deps for Hugging Face Spaces (avoid strict pins that conflict with gradio[oauth])
-huggingface_hub>=0.33.0,<1.0.0
-transformers>=4.45.0,<5.0.0
-torch>=2.2.0,<2.7.0
-safetensors>=0.4.0,<1.0.0
-
+# Vercel lightweight frontend dependencies
+# ML inference runs gracefully empty if torch/transformers are missing.
 # Scraping / parsing / feeds
 feedparser>=6.0.11,<7.0.0
 trafilatura>=1.12.0,<3.0.0
