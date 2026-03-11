@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>News Sentiment Analyzer</title>
+  </head>
+  <body>
+    <h1>News Sentiment Analyzer</h1>
+    <p>Pure HTML UI (no CSS, no JS). Submits to a Vercel serverless function.</p>
+
+    <form action="/api/analyze" method="get">
+      <fieldset>
+        <legend>Asset</legend>
+
+        <p>
+          <label>
+            Asset query
+            <input name="asset_query" value="Reliance Industries" required />
+          </label>
+        </p>
+
+        <p>
+          <label>
+            Asset type
+            <select name="asset_type">
+              <option value="auto" selected>auto</option>
+              <option value="ticker">ticker</option>
+              <option value="index">index</option>
+              <option value="company">company</option>
+            </select>
+          </label>
+        </p>
+      </fieldset>
+
+      <fieldset>
+        <legend>Fetch</legend>
+
+        <p>
+          <label>
+            Lookback hours
+            <input name="lookback_hours" type="number" min="1" max="168" step="1" value="24" />
+          </label>
+        </p>
+
+        <p>
+          <label>
+            Max articles
+            <input name="max_articles" type="number" min="1" max="500" step="1" value="120" />
+          </label>
+        </p>
+
+        <p>
+          <label>
+            Include full text in JSON output
+            <input name="include_full_text" type="checkbox" value="1" />
+          </label>
+        </p>
+      </fieldset>
+
+      <fieldset>
+        <legend>Sentiment Tuning</legend>
+
+        <p>
+          <label>
+            Bullish threshold (positive probability)
+            <input name="bullish_threshold" type="number" min="0" max="1" step="0.01" value="0.60" />
+          </label>
+        </p>
+
+        <p>
+          <label>
+            Bearish threshold (negative probability)
+            <input name="bearish_threshold" type="number" min="0" max="1" step="0.01" value="0.60" />
+          </label>
+        </p>
+
+        <p>
+          <label>
+            Heavy hitters to show
+            <input name="heavy_hitter_count" type="number" min="1" max="25" step="1" value="8" />
+          </label>
+        </p>
+      </fieldset>
+
+      <p>
+        <button type="submit">Run Analysis</button>
+      </p>
+
+      <p>
+        <a href="/api/health">Healthcheck</a>
+      </p>
+    </form>
+
+    <hr />
+    <p>
+      Tip: add <code>&amp;format=json</code> to the result URL to get raw JSON.
+    </p>
+  </body>
+</html>
