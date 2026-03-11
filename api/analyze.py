@@ -4,15 +4,9 @@ import html
 import json
 import sys
 from http.server import BaseHTTPRequestHandler
-from pathlib import Path
 from urllib.parse import parse_qs, urlparse
 
-ROOT = Path(__file__).resolve().parents[1]
-SRC = ROOT / "src"
-if str(SRC) not in sys.path:
-    sys.path.insert(0, str(SRC))
-
-from news_analyzer.service import analyze_latest_news
+from src.news_analyzer.service import analyze_latest_news
 
 
 def _get_first(params: dict[str, list[str]], key: str, default: str = "") -> str:
